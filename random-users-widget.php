@@ -3,7 +3,7 @@
 Plugin Name: Random Users Widget for Elementor
 Description: A custom Elementor widget that displays random users from the Random User API.
 Version: 1.0.0
-Author: Your Name
+Author: Preeti Singh
 */
 
 if ( ! defined( 'ABSPATH' ) ) {
