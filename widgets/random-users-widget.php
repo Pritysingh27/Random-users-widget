@@ -5,7 +5,7 @@ use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
 
 if ( ! defined( 'ABSPATH' ) ) {
-    exit; // Exit if accessed directly.
+    exit;
 }
 
 class Random_Users_Widget extends Widget_Base {
@@ -57,18 +57,6 @@ class Random_Users_Widget extends Widget_Base {
         );
 
         $this->end_controls_section();
-
-        $this->start_controls_section(
-            'style_section',
-            [
-                'label' => __( 'Style', 'random-users-widget' ),
-                'tab' => Controls_Manager::TAB_STYLE,
-            ]
-        );
-
-        // Add style controls here
-
-        $this->end_controls_section();
     }
 
     protected function render() {
@@ -81,8 +69,10 @@ class Random_Users_Widget extends Widget_Base {
             echo '<h2>' . esc_html( $title ) . '</h2>';
         }
         echo '<div class="users-list">';
-        $response = wp_remote_get( "https://randomuser.me/api/?results={$number_of_users}" );
+
+        $response = wp_remote_get( "https://randomuser.me/api/?results=" . intval( $number_of_users ) );
         if ( is_wp_error( $response ) ) {
+            echo '<p>' . esc_html__( 'Failed to retrieve users', 'random-users-widget' ) . '</p>';
             return;
         }
 
@@ -97,7 +87,10 @@ class Random_Users_Widget extends Widget_Base {
                 echo '<p>' . esc_html( $user->email ) . '</p>';
                 echo '</div>';
             }
+        } else {
+            echo '<p>' . esc_html__( 'No users found', 'random-users-widget' ) . '</p>';
         }
+
         echo '</div>';
         echo '</div>';
     }
@@ -108,15 +101,14 @@ class Random_Users_Widget extends Widget_Base {
             <h2>{{{ settings.title }}}</h2>
         <# } #>
         <div class="users-list">
-            <# _.each( settings.users, function( user ) { #>
+            <# for ( var i = 0; i < settings.number_of_users; i++ ) { #>
                 <div class="user">
-                    <img src="{{ user.picture.thumbnail }}" alt="{{ user.name.first }} {{ user.name.last }}">
-                    <p>{{{ user.name.first }}} {{{ user.name.last }}}</p>
-                    <p>{{{ user.email }}}</p>
+                    <img src="https://randomuser.me/api/portraits/thumb/men/{{{ i }}}.jpg" alt="{{{ __('User', 'random-users-widget') }}}">
+                    <p>{{{ __('User Name', 'random-users-widget') }}}</p>
+                    <p>{{{ __('user@example.com', 'random-users-widget') }}}</p>
                 </div>
-            <# }); #>
+            <# } #>
         </div>
         <?php
     }
 }
-?>
