@@ -1,0 +1,28 @@
+.random-users-widget {
+    text-align: center;
+}
+
+.random-users-widget h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.users-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.user {
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 150px;
+    text-align: center;
+}
+
+.user img {
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
